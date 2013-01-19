@@ -1,4 +1,6 @@
 JukeShop::Application.routes.draw do
+  get "test/test"
+
   resources :songs
 
 
