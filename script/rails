@@ -1,6 +1,17 @@
-#!/usr/bin/env ruby.exe
-# This command will automatically be run when you run "rails" with Rails 3 gems installed from the root of your application.
+require 'rubygems'
+gem 'soundcloud-ruby-api-wrapper'
+require 'soundcloud'
 
-APP_PATH = File.expand_path('../../config/application',  __FILE__)
-require File.expand_path('../../config/boot',  __FILE__)
-require 'rails/commands'
+# Create an anonymous soundcloud client
+# if you prefer to work with sandbox-soundcloud.com, replace this with:
+# sc_client = Soundcloud.register({:consumer_key => 'Your_Consumer_Key_Here', :site => "http://api.sandbox-soundcloud.com"})
+sc_client = Soundcloud.register
+
+# Find the 10 hottest tracks
+hot_tracks = sc_client.Track.find(:all,:params => {:order => 'hotness', :limit => 10})
+
+# and display their titles
+p '==the 10 hottest tracks=='
+hot_tracks.each do |track|
+  p track.title
+end
